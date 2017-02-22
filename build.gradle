@@ -1,0 +1,84 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven { url 'http://repo.spring.io/plugins-release' }
+		jcenter()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+	}
+}
+
+plugins {
+    id "org.flywaydb.flyway" version "4.0.3"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+apply plugin: 'idea'
+
+jar {
+	baseName = 'store'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+	compile "io.springfox:springfox-swagger2:2.4.0"
+	compile 'io.springfox:springfox-swagger-ui:2.4.0'
+	compile group: 'com.zaxxer', name: 'HikariCP', version: '2.4.6'
+	compile group: 'com.querydsl', name: 'querydsl-jpa', version: '4.1.3'
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
+
+    // JODA
+//    compile group: 'org.jadira.usertype', name: 'usertype.core', version: '6.0.1.GA'
+//    compile group: 'org.jadira.usertype', name: 'usertype.spi', version: '6.0.1.GA'
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.4'
+
+    // SPRING
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.springframework.boot', name: 'spring-boot-actuator'
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
+
+	// SPRING SECURITY
+//	compile("org.springframework.boot:spring-boot-starter-security")
+
+	// SUPPORT
+	compile 'com.google.guava:guava:19.0'
+
+	// TEST
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	testCompile("org.springframework.security:spring-security-test")
+
+	// Database
+	compile("org.flywaydb:flyway-core:4.0.3")
+    compile('com.h2database:h2')
+
+	// CACHING
+	compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.1.1.Final'
+	compile group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.2.2.21'
+	compile group: 'net.sf.ehcache', name: 'ehcache-core', version: '2.6.11'
+	compile group: 'ehcache', name: 'ehcache', version: '1.2.3'
+
+	// Format dates
+	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+	// Spring DevTools
+	compile("org.springframework.boot:spring-boot-devtools")
+}

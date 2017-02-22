@@ -1,0 +1,31 @@
+cache:
+  enabled: true
+
+spring:
+  datasource:
+    url: "jdbc:h2:mem:store;MODE=POSTGRES;DB_CLOSE_DELAY=-1"
+    platform: h2
+    driver-class-name: "org.h2.Driver"
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  h2:
+    console:
+      path: /admin/h2-console
+      enabled: true
+  devtools:
+    restart:
+      exclude: META-INF/maven/**,META-INF/resources/**,resources/**,public/**,**/*Test.class,**/*Tests.class
+
+logging:
+  level:
+    root: INFO
+    org.springframework.ws.client.MessageTracing: INFO
+    org.springframework.security: DEBUG
+    org.springframework.data: DEBUG
+
+spring.jackson.date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat

@@ -1,0 +1,61 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+CREATE TABLE PRODUCTS (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  sku VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE PRODUCT_PRICES (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  product_id BIGINT NOT NULL,
+  price DOUBLE
+);
+
+CREATE TABLE PRODUCT_PRICE_ADJUSTMENTS (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  product_id BIGINT NOT NULL,
+  quantity_to_apply_adjustment SMALLINT,
+  price_adjustment_amount DOUBLE
+);
+
+CREATE TABLE SALES (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  sale_date TIMESTAMP,
+  total DOUBLE
+);
+
+CREATE TABLE SALE_DETAILS (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+  sale_id BIGINT NOT NULL,
+  product_price_id BIGINT NOT NULL,
+  sale_price DOUBLE,
+  quantity SMALLINT
+);
+
+CREATE TABLE SALE_PRICE_ADJUSTMENT_DETAILS (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  sale_id BIGINT NOT NULL,
+  product_id BIGINT NOT NULL,
+  quantity_to_adjust SMALLINT NOT NULL,
+  price_adjustment_amount DOUBLE NOT NULL
+);
+
+INSERT INTO PRODUCTS (sku) VALUES ('A');
+INSERT INTO PRODUCTS (sku) VALUES ('B');
+INSERT INTO PRODUCTS (sku) VALUES ('C');
+INSERT INTO PRODUCTS (sku) VALUES ('D');
+
+INSERT INTO PRODUCT_PRICES(product_id, price) VALUES
+  ((SELECT id FROM PRODUCTS WHERE sku = 'A'), 1.25);
+INSERT INTO PRODUCT_PRICES(product_id, price) VALUES
+  ((SELECT id FROM PRODUCTS WHERE sku = 'B'), 4.25);
+INSERT INTO PRODUCT_PRICES(product_id, price) VALUES
+  ((SELECT id FROM PRODUCTS WHERE sku = 'C'), 1.00);
+INSERT INTO PRODUCT_PRICES(product_id, price) VALUES
+  ((SELECT id FROM PRODUCTS WHERE sku = 'D'), 0.75);
+
+INSERT INTO PRODUCT_PRICE_ADJUSTMENTS (product_id, quantity_to_apply_adjustment, price_adjustment_amount) VALUES
+  ((SELECT id FROM PRODUCTS WHERE sku = 'A'), 3, -0.25);
+INSERT INTO PRODUCT_PRICE_ADJUSTMENTS (product_id, quantity_to_apply_adjustment, price_adjustment_amount) VALUES
+  ((SELECT id FROM PRODUCTS WHERE sku = 'C'), 6, -0.16666666);
+
+INSERT INTO SALES (sale_date, total) VALUES (CURRENT_TIMESTAMP(), 0.0);
